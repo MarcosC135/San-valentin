@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para Mi Panda 🐼❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#FFF0F5 0%,#FFE4E9 50%,#FFD6E0 100%);
+    min-height:100dvh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    overflow-x:hidden;
+}
+
+/* Animación fondo */
+.background-animation{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1;
+}
+
+.floating-item{
+    position:absolute;
+    font-size:20px;
+    opacity:0;
+    animation:floatUp 10s linear infinite;
+    will-change:transform,opacity;
+    transform:translateZ(0);
+}
+
+@keyframes floatUp{
+    0%{
+        transform:translate3d(0,100dvh,0) rotate(0deg);
+        opacity:0;
+    }
+    10%{opacity:0.6;}
+    90%{opacity:0.6;}
+    100%{
+        transform:translate3d(0,-150px,0) rotate(360deg);
+        opacity:0;
+    }
+}
+
+/* Container */
+.main-container{
+    position:relative;
+    z-index:10;
+    width:100%;
+    max-width:400px;
+}
+
+/* Sobre */
+.envelope-container{
+    transition:all .5s ease;
+}
+
+.envelope-container.hide{
+    opacity:0;
+    transform:scale(.8);
+    pointer-events:none;
+    display:none;
+}
+
+.envelope{
+    background:linear-gradient(135deg,#FFE4E9 0%,#FFD6E0 100%);
+    border-radius:20px;
+    padding:40px 30px;
+    box-shadow:0 20px 60px rgba(139,0,0,.2);
+    text-align:center;
+    cursor:pointer;
+    min-height:300px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.envelope-icon{
+    font-size:80px;
+    margin-bottom:20px;
+    animation:bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+}
+
+.envelope-title{
+    font-size:28px;
+    font-weight:bold;
+    color:#8B0000;
+    margin-bottom:10px;
+}
+
+.envelope-date{
+    font-size:16px;
+    color:#DC143C;
+    margin-bottom:20px;
+}
+
+.envelope-hint{
+    background:rgba(255,255,255,.8);
+    padding:10px 25px;
+    border-radius:25px;
+    font-size:14px;
+    animation:pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.05);}
+}
+
+/* Carta */
+.letter-container{
+    display:none;
+    opacity:0;
+    transform:scale(.8);
+    transition:all .6s ease;
+}
+
+.letter-container.show{
+    display:block;
+    opacity:1;
+    transform:scale(1);
+}
+
+.letter{
+    background:rgba(255,255,255,.95);
+    border-radius:20px;
+    padding:35px 25px;
+    box-shadow:0 20px 60px rgba(139,0,0,.15);
+}
+
+.letter-header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.letter-date{
+    font-size:13px;
+    color:#DC143C;
+    font-weight:600;
+    margin-bottom:15px;
+}
+
+.letter-icon{
+    font-size:60px;
+    animation:heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat{
+    0%,100%{transform:scale(1);}
+    15%,35%{transform:scale(1.1);}
+    25%,45%{transform:scale(1);}
+}
+
+.letter-title{
+    font-size:26px;
+    font-weight:bold;
+    color:#8B0000;
+    margin-top:15px;
+}
+
+.letter-content{
+    font-size:16px;
+    line-height:1.7;
+    text-align:center;
+    margin:20px 0;
+    color:#4A4A4A;
+}
+
+.highlight{
+    color:#DC143C;
+    font-weight:600;
+}
+
+.letter-signature{
+    text-align:center;
+    font-size:18px;
+    font-style:italic;
+    color:#8B0000;
+    margin:25px 0;
+}
+
+.close-button{
+    display:block;
+    width:100%;
+    max-width:250px;
+    margin:20px auto 0;
+    padding:15px;
+    background:linear-gradient(135deg,#DC143C,#8B0000);
+    color:white;
+    border:none;
+    border-radius:50px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* Confeti */
+.confetti-piece{
+    position:fixed;
+    font-size:25px;
+    pointer-events:none;
+    z-index:1000;
+}
+
+@keyframes confettiFall{
+    to{
+        transform:translateY(100dvh) rotate(720deg);
+        opacity:0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background-animation" id="bgAnimation"></div>
+
+<div class="main-container">
+
+<div class="envelope-container" id="envelopeBox">
+    <div class="envelope" id="envelopeBtn">
+        <div class="envelope-icon">🐼💕</div>
+        <div class="envelope-title">Para Mi Panda</div>
+        <div class="envelope-date">14 de Febrero, 2026</div>
+        <div class="envelope-hint">✨ Toca aquí para abrir ✨</div>
+    </div>
+</div>
+
+<div class="letter-container" id="letterBox">
+    <div class="letter">
+        <div class="letter-header">
+            <div class="letter-date">14 de Febrero, 2026 · Día de San Valentín</div>
+            <div class="letter-icon">🐼❤️</div>
+            <div class="letter-title">Para Mi Panda Hermosa</div>
+        </div>
+
+        <div class="letter-content">
+            <p>En este día tan especial, quiero recordarte que <span class="highlight">eres mi todo</span> 🐼</p>
+            <p>Cada sonrisa tuya ilumina mi mundo.</p>
+            <p><span class="highlight">Te amo más de lo que las palabras pueden expresar</span>.</p>
+        </div>
+
+        <div class="letter-signature">Con todo mi amor ❤️</div>
+
+        <button class="close-button" id="closeBtn">Cerrar carta 💌</button>
+    </div>
+</div>
+
+</div>
+
+<script>
+
+var envelopeBox=document.getElementById('envelopeBox');
+var letterBox=document.getElementById('letterBox');
+var envelopeBtn=document.getElementById('envelopeBtn');
+var closeBtn=document.getElementById('closeBtn');
+var bgAnimation=document.getElementById('bgAnimation');
+
+function createFloatingItem(){
+    var items=['❤','💕','💖','🐼'];
+    var item=document.createElement('div');
+    item.className='floating-item';
+    item.textContent=items[Math.floor(Math.random()*items.length)];
+    item.style.left=Math.random()*100+'%';
+    item.style.fontSize=(Math.random()*10+15)+'px';
+    item.style.animationDuration=(Math.random()*5+8)+'s';
+    item.style.animationDelay=Math.random()*5+'s';
+    bgAnimation.appendChild(item);
+
+    setTimeout(function(){
+        if(item.parentNode){
+            item.parentNode.removeChild(item);
+        }
+    },15000);
+}
+
+for(var i=0;i<10;i++){
+    createFloatingItem();
+}
+
+setInterval(createFloatingItem,1500);
+
+function createConfetti(){
+    var shapes=['❤','💕','💖','🐼','🌹','✨'];
+    for(var i=0;i<25;i++){
+        var confetti=document.createElement('div');
+        confetti.className='confetti-piece';
+        confetti.textContent=shapes[Math.floor(Math.random()*shapes.length)];
+        confetti.style.left=Math.random()*100+'%';
+        confetti.style.top='-50px';
+        confetti.style.animation='confettiFall '+(Math.random()*2+2.5)+'s linear forwards';
+        document.body.appendChild(confetti);
+
+        setTimeout(function(c){
+            return function(){
+                if(c.parentNode){
+                    c.parentNode.removeChild(c);
+                }
+            }
+        }(confetti),4000);
+    }
+}
+
+function openLetter(){
+    envelopeBox.classList.add('hide');
+    setTimeout(function(){
+        letterBox.classList.add('show');
+        createConfetti();
+    },600);
+}
+
+function closeLetter(){
+    letterBox.classList.remove('show');
+    setTimeout(function(){
+        envelopeBox.classList.remove('hide');
+    },600);
+}
+
+envelopeBtn.addEventListener('click',openLetter);
+closeBtn.addEventListener('click',closeLetter);
+
+</script>
+
+</body>
+</html>
